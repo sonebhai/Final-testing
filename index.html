@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanskrit Shloka Viewer</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #ffb347, #ffcc33, #66ff99, #33ccff);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+            border: 5px solid white;
+            border-radius: 10px;
+            margin: 10px;
+            height: 98vh;
+            box-sizing: border-box;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* RGB Animated Heading */
+        .main-heading {
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 25px;
+            background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300%;
+            animation: rgbFlow 4s linear infinite;
+        }
+
+        @keyframes rgbFlow {
+            0% { background-position: 0%; }
+            100% { background-position: 100%; }
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 32px;
+            color: #ce93d8;
+        }
+
+        h2 {
+            color: purple;
+            font-size: 26px;
+            margin-top: 10px;
+            text-decoration: underline;
+        }
+
+        p {
+            font-size: 26px;
+            margin: 40px;
+            color: white;
+            font-weight: 600;
+            min-height: 80px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        p.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stylish Next Button */
+        button {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #ff4081, #536dfe);
+            color: white;
+            border: none;
+            padding: 14px 45px;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: 0.4s ease;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #536dfe, #ff4081);
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 0 30px rgba(255,255,255,0.8);
+        }
+
+        /* Unique Loader Animation */
+        .loader {
+            display: none;
+            margin: 90px auto;
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+
+        .loader::before, .loader::after {
+            content: "";
+            position: absolute;
+            border: 6px solid white;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: pulse 2s infinite;
+        }
+
+        .loader::after {
+            animation-delay: 1s;
+            border-color: #purple;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.6); opacity: 0.3; }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0.6); opacity: 0.3; }
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            color: white;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-heading">Bluepink Gaming</div>
+    <h1 id="heading">Sanskrit Shloka 1</h1>
+    <h2 id="title">Satyam Vad Dharam Char</h2>
+    <div class="loader" id="loader"></div>
+    <p id="shloka"></p>
+    <button onclick="nextShloka()">Next ➜</button>
+    <footer>© 2025 RO Studio. All Rights Reserved.</footer>
+
+    <script>
+        const shlokas = [
+            {
+                number: 1,
+                title: "Satyam Vad Dharam Char",
+                text: "सत्यं वद धर्मं चर ।"
+            },
+            {
+                number: 2,
+                title: "Karmanyeva Adhikaraste",
+                text: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।"
+            },
+            {
+                number: 3,
+                title: "Guru Brahma Guru Vishnu",
+                text: "गुरुर्ब्रह्मा गुरुर्विष्णुः गुरुर्देवो महेश्वरः ।"
+            }
+        ];
+
+        let index = 0;
+
+        function showShloka(index) {
+            const shlokaText = document.getElementById('shloka');
+            document.getElementById('heading').textContent = "Sanskrit Shloka " + shlokas[index].number;
+            document.getElementById('title').textContent = shlokas[index].title;
+            shlokaText.textContent = shlokas[index].text;
+
+            shlokaText.classList.remove('show');
+            setTimeout(() => {
+                shlokaText.classList.add('show');
+            }, 200);
+        }
+
+        function nextShloka() {
+            const loader = document.getElementById('loader');
+            const shlokaText = document.getElementById('shloka');
+            shlokaText.classList.remove('show');
+            loader.style.display = 'block';
+
+            setTimeout(() => {
+                index = (index + 1) % shlokas.length;
+                loader.style.display = 'none';
+                showShloka(index);
+            }, 2000);
+        }
+
+        (function main() {
+            showShloka(index);
+        })();
+    </script>
+
+</body>
+</html>
